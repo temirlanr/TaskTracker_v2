@@ -16,7 +16,7 @@ namespace TaskTracker_v2.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // configure one-to-may relation
+            // configure one-to-many relation
             modelBuilder.Entity<ProjectTask>().HasOne(p => p.Project).WithMany(t => t.Tasks).HasForeignKey(k => k.ProjectId);
         }
     }

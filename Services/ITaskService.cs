@@ -10,10 +10,15 @@ namespace TaskTracker_v2.Services
     public interface ITaskService
     {
         /// <summary>
-        /// Gets the List of <see cref="ProjectTask"/>s
+        /// Gets the List of all <see cref="ProjectTask"/>s
         /// </summary>
         /// <returns><see cref="ProjectTask"/> List</returns>
         IEnumerable<ProjectTask> GetTasks();
+        /// <summary>
+        /// Gets the List of <see cref="ProjectTask"/>s given a Project Id
+        /// </summary>
+        /// <returns><see cref="ProjectTask"/> List</returns>
+        IEnumerable<ProjectTask> GetTasksByProjectId(int projectId);
         /// <summary>
         /// Returns <see cref="ProjectTask"/> data given it Id
         /// </summary>
@@ -26,7 +31,6 @@ namespace TaskTracker_v2.Services
         /// </summary>
         /// <param name="task"></param>
         /// <exception cref="InvalidStatusException"></exception>
-        /// <exception cref="InvalidTaskIdException"></exception>
         void CreateTask(ProjectTask task);
         /// <summary>
         /// Updates <see cref="ProjectTask"/>

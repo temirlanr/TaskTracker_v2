@@ -49,6 +49,35 @@ namespace TaskTracker_v2.Controllers
             }
         }
 
+        // POST: api/projects/filter=id
+        /// <summary>
+        /// Filters Project List by Id
+        /// </summary>
+        /// <remarks>
+        /// Operator Options: 0 = Equal, 1 = Greater than or equal, 2 = Less than or equal;
+        /// SortOrder Options: 0 = Ascending, 1 = Descending.
+        /// </remarks>
+        /// <param name="options"></param>
+        /// <returns>A filtered list of Projects</returns>
+        /// <response code="200">Request processed</response>
+        /// <response code="400">Error occured while processing, check the Exception info please</response> 
+        [HttpPost]
+        [Route("filter=id")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<IEnumerable<ProjectReadDto>> FilterProjectsById(ProjectRetrievalOptions options)
+        {
+            try
+            {
+                var projects = _projectService.FilterByProjectId(options);
+                return Ok(_mapper.Map<IEnumerable<ProjectReadDto>>(projects));
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
         // GET: api/projects/{projectId}
         /// <summary>
         /// Returns information about Project given its ID

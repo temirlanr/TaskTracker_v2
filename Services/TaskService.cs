@@ -12,12 +12,14 @@ namespace TaskTracker_v2.Services
     public class TaskService : ITaskService
     {
         private readonly ITaskRepo _taskRepo;
+        private readonly IProjectRepo _projectRepo;
         private readonly ITaskTrackerValidation _validation;
 
-        public TaskService(ITaskRepo taskRepo, ITaskTrackerValidation validation)
+        public TaskService(ITaskRepo taskRepo, IProjectRepo projectRepo, ITaskTrackerValidation validation)
         {
             _taskRepo = taskRepo;
             _validation = validation;
+            _projectRepo = projectRepo;
         }
 
         public void CreateTask(ProjectTask task)
@@ -53,6 +55,18 @@ namespace TaskTracker_v2.Services
         public IEnumerable<ProjectTask> GetTasks()
         {
             return _taskRepo.GetTasks();
+        }
+
+        public IEnumerable<ProjectTask> GetTasksByProjectId(int projectId)
+        {
+            var existingProject = _projectRepo.GetProjectById(projectId);
+
+            if (existingProject == null)
+            {
+                throw new ProjectNotFoundException($"Project with Id {projectId} doesn't exist.");
+            }
+
+            return _taskRepo.GetTasks().Where(t => t.ProjectId == projectId);
         }
 
         public void UpdateTask(ProjectTask task)

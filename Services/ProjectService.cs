@@ -50,6 +50,39 @@ namespace TaskTracker_v2.Services
             return existingProject;
         }
 
+        public IEnumerable<Project> FilterByProjectId(ProjectRetrievalOptions options)
+        {
+            var projects = _projectRepo.GetProjects();
+
+            switch (options.Filter.Operator)
+            {
+                case FilterOperator.EQ:
+                    projects = projects.Where(p => p.Id == Int32.Parse(options.Filter.Value));
+                    break;
+                case FilterOperator.GTE:
+                    projects = projects.Where(p => p.Id >= Int32.Parse(options.Filter.Value));
+                    break;
+                case FilterOperator.LTE:
+                    projects = projects.Where(p => p.Id <= Int32.Parse(options.Filter.Value));
+                    break;
+                default:
+                    throw new Exception("Given filter operator is not supported by property Id");
+            }
+
+            if (options.SortOrder == SortOrder.ASC)
+            {
+                projects = projects.OrderBy(p => p.Id);
+            }
+            else if (options.SortOrder == SortOrder.DESC)
+            {
+                projects = projects.OrderByDescending(p => p.Id);
+            }
+
+            return projects.ToList();
+        }
+
+
+
         public IEnumerable<Project> GetProjects()
         {
             return _projectRepo.GetProjects();

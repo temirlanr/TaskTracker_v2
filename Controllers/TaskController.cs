@@ -60,11 +60,36 @@ namespace TaskTracker_v2.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<TaskReadDto>> GetTasks()
+        public ActionResult<IEnumerable<TaskReadDto>> GetAllTasks()
         {
             try
             {
                 var tasks = _taskService.GetTasks();
+                return Ok(_mapper.Map<IEnumerable<TaskReadDto>>(tasks));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        // GET: api/tasks/project{projectId}
+        /// <summary>
+        /// Returns the list of Tasks given a Project Id
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of Tasks</returns>
+        /// <response code="200">Request processed</response>
+        /// <response code="400">Error occured while processing, check the Exception info please</response>
+        [HttpGet]
+        [Route("project{projectId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<IEnumerable<TaskReadDto>> GetTasksByProjectId(int projectId)
+        {
+            try
+            {
+                var tasks = _taskService.GetTasksByProjectId(projectId);
                 return Ok(_mapper.Map<IEnumerable<TaskReadDto>>(tasks));
             }
             catch (Exception e)

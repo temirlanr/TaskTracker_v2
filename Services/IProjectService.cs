@@ -23,11 +23,20 @@ namespace TaskTracker_v2.Services
         /// <exception cref="ProjectNotFoundException"></exception>
         Project GetProjectById(int projectId);
         /// <summary>
+        /// Filters <see cref="Project"/> List by the Id
+        /// </summary>
+        /// <remarks>
+        /// Operator Options: 0 = Equal, 1 = Greater than or equal, 2 = Less than or equal;
+        /// SortOrder Options: 0 = Ascending, 1 = Descending.
+        /// </remarks>
+        /// <param name="options"></param>
+        /// <returns><see cref="Project"/> List</returns>
+        IEnumerable<Project> FilterByProjectId(ProjectRetrievalOptions options);
+        /// <summary>
         /// Creates an instance of <see cref="Project"/> in database
         /// </summary>
         /// <param name="project"></param>
         /// <exception cref="InvalidStatusException"></exception>
-        /// <exception cref="InvalidTaskIdException"></exception>
         void CreateProject(Project project);
         /// <summary>
         /// Updates <see cref="Project"/>

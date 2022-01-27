@@ -15,6 +15,5 @@ namespace TaskTracker_v2.Dtos
         public int Priority { get; set; }
         public DateTimeOffset StartDate { get; set; }
         public DateTimeOffset CompleteDate { get; set; }
-        public List<TaskReadDto> Tasks { get; set; }
     }
 }

@@ -27,21 +27,5 @@ namespace TaskTracker_v2.Validations
                 throw new InvalidStatusException("Invalid task status.");
             }
         }
-
-        public void ValidateTaskId(List<ProjectTask> tasks)
-        {
-            var temp = new List<int>();
-            foreach(var task in tasks)
-            {
-                if (temp.Contains(task.Id))
-                {
-                    throw new InvalidTaskIdException("Task ID(-s) not unique.");
-                }
-                else
-                {
-                    temp.Add(task.Id);
-                }
-            }
-        }
     }
 }

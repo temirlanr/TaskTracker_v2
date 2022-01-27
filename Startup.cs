@@ -56,6 +56,7 @@ namespace TaskTracker_v2
             services.AddScoped<IProjectRepo, ProjectRepo>();
             services.AddScoped<ITaskRepo, TaskRepo>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<ITaskTrackerValidation, TaskTrackerValidation>();
         }
 

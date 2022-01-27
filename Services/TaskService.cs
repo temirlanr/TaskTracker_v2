@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskTracker_v2.Entities;
+using TaskTracker_v2.Exceptions;
 using TaskTracker_v2.Repositories;
 using TaskTracker_v2.Validations;
 
@@ -21,27 +22,43 @@ namespace TaskTracker_v2.Services
 
         public void CreateTask(ProjectTask task)
         {
-            throw new NotImplementedException();
+            _validation.ValidateTaskStatus(task.Status);
+            _taskRepo.CreateTask(task);
         }
 
         public void DeleteTask(int taskId)
         {
-            throw new NotImplementedException();
+            var task = _taskRepo.GetTaskById(taskId);
+
+            if(task == null)
+            {
+                throw new TaskNotFoundException($"Task with Id {taskId} doesn't exist.");
+            }
+
+            _taskRepo.DeleteTask(task);
         }
 
         public ProjectTask GetTaskById(int taskId)
         {
-            throw new NotImplementedException();
+            var task = _taskRepo.GetTaskById(taskId);
+
+            if (task == null)
+            {
+                throw new TaskNotFoundException($"Task with Id {taskId} doesn't exist.");
+            }
+
+            return task;
         }
 
         public IEnumerable<ProjectTask> GetTasks()
         {
-            throw new NotImplementedException();
+            return _taskRepo.GetTasks();
         }
 
         public void UpdateTask(ProjectTask task)
         {
-            throw new NotImplementedException();
+            _validation.ValidateTaskStatus(task.Status);
+            _taskRepo.UpdateTask(task);
         }
     }
 }

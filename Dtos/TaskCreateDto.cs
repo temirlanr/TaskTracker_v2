@@ -7,6 +7,7 @@ namespace TaskTracker_v2.Dtos
 {
     public class TaskCreateDto
     {
+        public int ProjectId { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
         public string Description { get; set; }
